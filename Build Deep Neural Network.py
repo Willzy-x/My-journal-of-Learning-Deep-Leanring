@@ -77,3 +77,15 @@ def L_model_forward(X, parameters):
     return AL, caches
 
 def compute_cost(AL, Y):
+    m = Y.shape[1]
+    
+    cost = (-1/m) * np.sum(np.multiply(np.log(AL), Y) + np.multiply((1-Y), np.log(1-AL)))
+    
+    cost = np.squeeze(cost)      # To make sure your cost's shape is what we expect (e.g. this turns [[17]] into 17).
+    assert(cost.shape == ())
+    
+    return cost
+
+def linear_backward(dZ, cache):
+    A_prev, W, b = cache
+    m = A_prev.shape[1]
